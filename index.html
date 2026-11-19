@@ -1,1 +1,214 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f9f9">
+  <title>Ovria Accounts</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f9f9;
+      color: #111;
+    }
+
+    header {
+      height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8%;
+      border-bottom: 1px solid #e8eeee;
+      background: #fff;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 25px;
+      font-weight: 700;
+      letter-spacing: -1px;
+    }
+
+    .logo img {
+      width: 43px;
+      height: 43px;
+      object-fit: contain;
+    }
+
+    .logo span { color: #111; }
+
+    nav a {
+      color: #333;
+      text-decoration: none;
+      margin-left: 28px;
+      font-size: 14px;
+    }
+
+    nav a:hover { color: #168d94; }
+
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 100px 24px;
+    }
+
+    .hero {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 65px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 8px 15px;
+      border-radius: 30px;
+      background: #e2f4f3;
+      color: #167d82;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: clamp(38px, 6vw, 64px);
+      letter-spacing: -2px;
+      margin: 25px 0 18px;
+    }
+
+    h1 span { color: #168e94; }
+
+    .description {
+      color: #737d7d;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .actions {
+      margin-top: 32px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 14px 25px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .primary {
+      background: #168e94;
+      color: white;
+    }
+
+    .secondary {
+      border: 1px solid #d8e1e1;
+      color: #222;
+      background: white;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .feature {
+      padding: 27px;
+      background: white;
+      border: 1px solid #e8eeee;
+      border-radius: 16px;
+    }
+
+    .feature .symbol {
+      font-size: 25px;
+      color: #168e94;
+    }
+
+    .feature h3 { margin: 18px 0 10px; }
+
+    .feature p {
+      color: #788282;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    footer {
+      border-top: 1px solid #e8eeee;
+      padding: 25px;
+      text-align: center;
+      color: #899292;
+      font-size: 13px;
+    }
+
+    @media (max-width: 650px) {
+      header { padding: 0 20px; }
+      nav a { margin-left: 12px; }
+      main { padding-top: 70px; }
+      .features { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="logo.png" alt="Ovria">
+    <span>ACCOUNTS</span>
+  </div>
+  <nav>
+    <a href="#features">Возможности</a>
+    <a href="#about">О проекте</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" id="about">
+    <span class="tag">OVRIA ECOSYSTEM</span>
+    <h1>One account.<br><span>All Ovria.</span></h1>
+    <p class="description">
+      Ovria Accounts — единая система учётных записей
+      для проектов экосистемы Ovria.
+    </p>
+    <div class="actions">
+      <a class="button primary" href="#login">Войти в аккаунт</a>
+      <a class="button secondary" href="#features">Подробнее</a>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <article class="feature">
+      <div class="symbol">◈</div>
+      <h3>Единый аккаунт</h3>
+      <p>Одна учётная запись для проектов экосистемы Ovria.</p>
+    </article>
+
+    <article class="feature">
+      <div class="symbol">⌘</div>
+      <h3>Управление устройствами</h3>
+      <p>Просматривайте и управляйте подключёнными устройствами.</p>
+    </article>
+
+    <article class="feature">
+      <div class="symbol">◎</div>
+      <h3>Безопасность</h3>
+      <p>Защита учётной записи и управление доступом.</p>
+    </article>
+  </section>
+</main>
+
+<footer>
+  © 2026 Ovria. All rights reserved.
+</footer>
+
+</body>
+</html>
 
