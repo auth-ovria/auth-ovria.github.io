@@ -1,1 +1,403 @@
 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f9f9">
+  <title>Регистрация — Ovria Accounts</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      font-family: Arial, sans-serif;
+      background: #f7f9f9;
+      color: #111;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      padding: 36px;
+      background: white;
+      border: 1px solid #e8eeee;
+      border-radius: 18px;
+    }
+
+    .logo {
+      display: block;
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin: 0 auto 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 0 0 10px;
+      font-size: 28px;
+    }
+
+    .description {
+      text-align: center;
+      color: #788282;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      margin: 18px 0 8px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d8e1e1;
+      border-radius: 9px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus { border-color: #168e94; }
+
+    button {
+      width: 100%;
+      margin-top: 25px;
+      padding: 15px;
+      border: 0;
+      border-radius: 9px;
+      background: #168e94;
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    #message {
+      margin-top: 18px;
+      font-size: 14px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .links {
+      margin-top: 24px;
+      text-align: center;
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    a { color: #168e94; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <img class="logo" src="../logo.png" alt="Ovria">
+
+    <h1>Создать аккаунт</h1>
+    <p class="description">Зарегистрируйтесь в Ovria Accounts.</p>
+
+    <form id="registerForm">
+      <label for="username">Имя пользователя</label>
+      <input id="username" type="text"
+             autocomplete="username" required>
+
+      <label for="email">Email</label>
+      <input id="email" type="email"
+             autocomplete="email" required>
+
+      <label for="password">Пароль</label>
+      <input id="password" type="password"
+             autocomplete="new-password" minlength="8" required>
+
+      <button id="submitButton" type="submit">Зарегистрироваться</button>
+    </form>
+
+    <div id="message" role="status"></div>
+
+    <div class="links">
+      Уже есть аккаунт? <a href="../signin/">Войти</a>
+      <br>
+      <a href="../">На главную</a>
+    </div>
+  </main>
+
+  <script>
+    const API = "https://herself.fxtun.ru";
+
+    const form = document.getElementById("registerForm");
+    const message = document.getElementById("message");
+    const button = document.getElementById("submitButton");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      message.textContent = "";
+      button.disabled = true;
+      button.textContent = "Создаём аккаунт...";
+
+      try {
+        const response = await fetch(`${API}/register`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            username: document.getElementById("username").value.trim(),
+            email: document.getElementById("email").value.trim(),
+            password: document.getElementById("password").value
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          if (response.status === 400) {
+            throw new Error("Пароль должен содержать минимум 8 символов.");
+          }
+
+          if (response.status === 409) {
+            throw new Error("Это имя пользователя или email уже заняты.");
+          }
+
+          throw new Error("Не удалось создать аккаунт. Попробуйте позже.");
+        }
+
+        message.style.color = "#168e94";
+        message.textContent = "Аккаунт создан! Перенаправляем на вход...";
+
+        form.reset();
+
+        setTimeout(() => {
+          window.location.href = "../signin/";
+        }, 1200);
+
+      } catch (error) {
+        message.style.color = "#c0392b";
+        message.textContent = error.message === "Failed to fetch"
+          ? "Не удалось связаться с сервером."
+          : error.message;
+      } finally {
+        button.disabled = false;
+        button.textContent = "Зарегистрироваться";
+      }
+    });
+  </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f9f9">
+  <title>Регистрация — Ovria Accounts</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      font-family: Arial, sans-serif;
+      background: #f7f9f9;
+      color: #111;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      padding: 36px;
+      background: white;
+      border: 1px solid #e8eeee;
+      border-radius: 18px;
+    }
+
+    .logo {
+      display: block;
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin: 0 auto 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 0 0 10px;
+      font-size: 28px;
+    }
+
+    .description {
+      text-align: center;
+      color: #788282;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      margin: 18px 0 8px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d8e1e1;
+      border-radius: 9px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus { border-color: #168e94; }
+
+    button {
+      width: 100%;
+      margin-top: 25px;
+      padding: 15px;
+      border: 0;
+      border-radius: 9px;
+      background: #168e94;
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    #message {
+      margin-top: 18px;
+      font-size: 14px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .links {
+      margin-top: 24px;
+      text-align: center;
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    a { color: #168e94; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <img class="logo" src="../logo.png" alt="Ovria">
+
+    <h1>Создать аккаунт</h1>
+    <p class="description">Зарегистрируйтесь в Ovria Accounts.</p>
+
+    <form id="registerForm">
+      <label for="username">Имя пользователя</label>
+      <input id="username" type="text"
+             autocomplete="username" required>
+
+      <label for="email">Email</label>
+      <input id="email" type="email"
+             autocomplete="email" required>
+
+      <label for="password">Пароль</label>
+      <input id="password" type="password"
+             autocomplete="new-password" minlength="8" required>
+
+      <button id="submitButton" type="submit">Зарегистрироваться</button>
+    </form>
+
+    <div id="message" role="status"></div>
+
+    <div class="links">
+      Уже есть аккаунт? <a href="../signin/">Войти</a>
+      <br>
+      <a href="../">На главную</a>
+    </div>
+  </main>
+
+  <script>
+    const API = "https://herself.fxtun.ru";
+
+    const form = document.getElementById("registerForm");
+    const message = document.getElementById("message");
+    const button = document.getElementById("submitButton");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      message.textContent = "";
+      button.disabled = true;
+      button.textContent = "Создаём аккаунт...";
+
+      try {
+        const response = await fetch(`${API}/register`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            username: document.getElementById("username").value.trim(),
+            email: document.getElementById("email").value.trim(),
+            password: document.getElementById("password").value
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          if (response.status === 400) {
+            throw new Error("Пароль должен содержать минимум 8 символов.");
+          }
+
+          if (response.status === 409) {
+            throw new Error("Это имя пользователя или email уже заняты.");
+          }
+
+          throw new Error("Не удалось создать аккаунт. Попробуйте позже.");
+        }
+
+        message.style.color = "#168e94";
+        message.textContent = "Аккаунт создан! Перенаправляем на вход...";
+
+        form.reset();
+
+        setTimeout(() => {
+          window.location.href = "../signin/";
+        }, 1200);
+
+      } catch (error) {
+        message.style.color = "#c0392b";
+        message.textContent = error.message === "Failed to fetch"
+          ? "Не удалось связаться с сервером."
+          : error.message;
+      } finally {
+        button.disabled = false;
+        button.textContent = "Зарегистрироваться";
+      }
+    });
+  </script>
+</body>
+</html>
+
